@@ -143,11 +143,23 @@ Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
 function getCountryWins(data, teamInitials) {
-    return getFinals(data)
-}
+    // return getFinals(data)
+    // first grab initials, check if initials are home or away, check if home or away won, if a tie go to win con, add instance of winning
+    const filteredData = data.reduce((total, input) => {
+      // conditional here to add to the total
+      if (input["Stage"] === "Final" && teamInitials === input["Home Team Initials"] && input["Home Team Goals"] > input["Away Team Goals"]) {
+        let sum = total += 1
+        return sum;
+      } else if (input["Stage"] === "Final" && teamInitials === input["Away Team Initials"] && input["Away Team Goals"] > input["Home Team Goals"]) {
+        let sum = total += 1;
+        return sum;
+      }
+    }, 0)
+    return filteredData;
+  }
 
-getCountryWins(fifaData, "NED")
-console.log(getCountryWins(fifaData, "NED"));
+getCountryWins(fifaData, "BRA")
+console.log("@@@@@@ CURRENT TASK @@@@@@ =>", getCountryWins(fifaData, "BRA"));
 
 /* 💪💪💪💪💪 Stretch 2: 💪💪💪💪💪 
 Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
